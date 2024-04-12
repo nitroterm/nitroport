@@ -3,6 +3,7 @@ import 'package:nitroport/backend/models.dart';
 import 'package:nitroport/backend/nitroback.dart';
 import 'package:nitroport/colortheme.dart';
 import 'package:nitroport/components/button.dart';
+import 'package:nitroport/pages/home_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key, required this.title});
@@ -47,7 +48,9 @@ class _LoginPageState extends State<LoginPage> {
       return;
     }
 
-    _setError(resp.data!.token);
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+      return MyHomePage(title: "title");
+    }));
   }
 
   @override
