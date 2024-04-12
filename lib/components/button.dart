@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class NTButton extends StatelessWidget {
-  const NTButton({super.key, required this.text, required this.onTap});
+class NTErrorHeader extends StatelessWidget {
+  const NTErrorHeader({super.key, required this.text});
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -14,23 +14,27 @@ class NTButton extends StatelessWidget {
   // always marked "final".
 
   final String text;
-  final void Function() onTap;
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-        onTap: onTap,
-        child: Container(
-          height: 50,
-          decoration: BoxDecoration(
-              color: const Color(0xFF290D59),
-              border: Border.all(color: const Color(0xFF411A83), width: 2),
-              borderRadius: BorderRadius.circular(4)),
-          child: Center(
-              child: Text(
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      decoration: BoxDecoration(
+          color: const Color(0xFF590D0D),
+          border: Border.all(color: const Color(0xFF9D2121), width: 1),
+          borderRadius: BorderRadius.circular(4)),
+      child: Row(
+        children: [
+          const SizedBox(width: 12),
+          const Icon(Icons.cancel),
+          const SizedBox(width: 10),
+          Expanded(child: Text(
             text,
+            softWrap: true,
             style: Theme.of(context).textTheme.bodyLarge,
-          )),
-        ));
+          ))
+        ],
+      ),
+    );
   }
 }
