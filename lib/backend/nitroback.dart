@@ -8,18 +8,23 @@ const String nbBaseUrl = "https://services.cacahuete.dev/api/nitroterm/v1";
 String? nbToken;
 UserDto? nbCurrentUser;
 
-Future<LoginResultDto?> nbLogin(String username, String password) async {
-  LoginDto dto = LoginDto(username: username, password: password);
+Future<LoginResultDto?> nbLogin(
+    String username, String password, String firebaseToken) async {
+  LoginDto dto = LoginDto(
+      username: username, password: password, firebaseToken: firebaseToken);
   var bodyJson = jsonEncode(dto.toJson());
 
-  final response =
-  await http.post(Uri.parse('$nbBaseUrl/auth/login'), body: bodyJson, headers: {
+  final response = await http
+      .post(Uri.parse('$nbBaseUrl/auth/login'), body: bodyJson, headers: {
     HttpHeaders.contentTypeHeader: ContentType.json.value,
     if (nbToken != null) HttpHeaders.authorizationHeader: 'Bearer $nbToken'
   });
 
   if (response.statusCode == HttpStatus.tooManyRequests) {
-    return LoginResultDto(success: false, slug: "too_many_requests", message: "Too many requests");
+    return LoginResultDto(
+        success: false,
+        slug: "too_many_requests",
+        message: "Too many requests");
   }
 
   LoginResultDto result = LoginResultDto.fromJson(
@@ -38,34 +43,39 @@ Future<PostResultDto?> nbPostMessage(String contents) async {
   var bodyJson = jsonEncode(dto.toJson());
 
   final response =
-  await http.post(Uri.parse('$nbBaseUrl/post'), body: bodyJson, headers: {
+      await http.post(Uri.parse('$nbBaseUrl/post'), body: bodyJson, headers: {
     HttpHeaders.contentTypeHeader: ContentType.json.value,
     if (nbToken != null) HttpHeaders.authorizationHeader: 'Bearer $nbToken'
   });
 
   if (response.statusCode == HttpStatus.tooManyRequests) {
-    return PostResultDto(success: false, slug: "too_many_requests", message: "Too many requests");
+    return PostResultDto(
+        success: false,
+        slug: "too_many_requests",
+        message: "Too many requests");
   }
 
-  PostResultDto result = PostResultDto.fromJson(
-      jsonDecode(response.body) as Map<String, dynamic>);
+  PostResultDto result =
+      PostResultDto.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
 
   return result;
 }
 
 Future<FeedResultDto?> nbGetFeed() async {
-  final response =
-  await http.get(Uri.parse('$nbBaseUrl/feed'), headers: {
+  final response = await http.get(Uri.parse('$nbBaseUrl/feed'), headers: {
     HttpHeaders.contentTypeHeader: ContentType.json.value,
     if (nbToken != null) HttpHeaders.authorizationHeader: 'Bearer $nbToken'
   });
 
   if (response.statusCode == HttpStatus.tooManyRequests) {
-    return FeedResultDto(success: false, slug: "too_many_requests", message: "Too many requests");
+    return FeedResultDto(
+        success: false,
+        slug: "too_many_requests",
+        message: "Too many requests");
   }
 
-  FeedResultDto result = FeedResultDto.fromJson(
-      jsonDecode(response.body) as Map<String, dynamic>);
+  FeedResultDto result =
+      FeedResultDto.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
 
   return result;
 }

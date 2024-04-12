@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:nitroport/backend/models.dart';
 import 'package:nitroport/backend/nitroback.dart';
@@ -36,8 +37,10 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _login(String username, String password) async {
+    String? token = await FirebaseMessaging.instance.getToken();
+
     LoginResultDto? resp =
-        await nbLogin(_usernameCtrl.text, _passwordCtrl.text);
+        await nbLogin(_usernameCtrl.text, _passwordCtrl.text, token!);
     if (resp == null) {
       _setError("Backend returned no response");
       return;

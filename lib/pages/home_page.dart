@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:nitroport/colortheme.dart';
 import 'package:nitroport/pages/home_routes/feed_home_route.dart';
@@ -23,6 +24,28 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _currentPageIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+
+    initFirebase();
+  }
+
+  void initFirebase() async {
+    // Asks for notifications permissions
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
+
+    NotificationSettings settings = await messaging.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -10,12 +10,13 @@ LoginDto _$LoginDtoFromJson(Map<String, dynamic> json) => LoginDto(
       username: json['username'] as String,
       password: json['password'] as String,
       reCaptchaChallenge: json['reCaptchaChallenge'] as String?,
-    );
+    )..firebaseToken = json['firebaseToken'] as String?;
 
 Map<String, dynamic> _$LoginDtoToJson(LoginDto instance) => <String, dynamic>{
       'username': instance.username,
       'password': instance.password,
       'reCaptchaChallenge': instance.reCaptchaChallenge,
+      'firebaseToken': instance.firebaseToken,
     };
 
 ProductDto _$ProductDtoFromJson(Map<String, dynamic> json) => ProductDto(

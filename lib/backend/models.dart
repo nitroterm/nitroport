@@ -7,11 +7,13 @@ class LoginDto {
   LoginDto(
       {required this.username,
       required this.password,
-      this.reCaptchaChallenge});
+      this.reCaptchaChallenge,
+      this.firebaseToken});
 
   String username;
   String password;
   String? reCaptchaChallenge;
+  String? firebaseToken;
 
   factory LoginDto.fromJson(Map<String, dynamic> json) =>
       _$LoginDtoFromJson(json);
