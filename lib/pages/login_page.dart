@@ -59,8 +59,7 @@ class _LoginPageState extends State<LoginPage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-        body: SafeArea(
-      child: Container(
+      body: Container(
         decoration: BoxDecoration(
             image: DecorationImage(
                 image: AssetImage("assets/backgrounds/background.png"),
@@ -73,89 +72,90 @@ class _LoginPageState extends State<LoginPage> {
                 borderRadius: BorderRadius.circular(4)),
             padding: EdgeInsets.symmetric(vertical: 20),
             margin: EdgeInsets.all(10),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                const Image(
-                    image: AssetImage("assets/nitroterm_logo.png"), height: 80),
-                const SizedBox(height: 20),
-                Text("Login to your account",
-                    style: Theme.of(context).textTheme.headlineSmall),
-                const SizedBox(height: 20),
-                Container(
-                  margin:
-                      const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
-                  child: Form(
-                    key: _formKey,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        if (_errorMessage != null)
-                          NTErrorHeader(text: _errorMessage!),
-                        const SizedBox(height: 10),
-                        TextFormField(
-                          controller: _usernameCtrl,
-                          decoration: const InputDecoration(
-                              labelText: 'Username',
-                              border: OutlineInputBorder()),
-                          validator: (String? value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Enter an username';
-                            }
-
-                            return null;
-                          },
-                        ),
-                        const SizedBox(height: 10),
-                        TextFormField(
-                          controller: _passwordCtrl,
-                          obscureText: true,
-                          decoration: const InputDecoration(
-                              labelText: 'Password',
-                              border: OutlineInputBorder()),
-                          validator: (String? value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Enter a password';
-                            }
-
-                            return null;
-                          },
-                        ),
-                        const SizedBox(height: 20),
-                        TextButton(
-                            child: Text('Login'),
-                            style: primaryButtonStyle(),
-                            onPressed: () {
-                              if (!_formKey.currentState!.validate()) {
-                                return;
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  const Image(
+                      image: AssetImage("assets/nitroterm_logo.png"), height: 80),
+                  const SizedBox(height: 20),
+                  Text("Login to your account",
+                      style: Theme.of(context).textTheme.headlineSmall),
+                  const SizedBox(height: 20),
+                  Container(
+                    margin:
+                    const EdgeInsets.symmetric(vertical: 0, horizontal: 22),
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          if (_errorMessage != null)
+                            NTErrorHeader(text: _errorMessage!),
+                          const SizedBox(height: 10),
+                          TextFormField(
+                            controller: _usernameCtrl,
+                            decoration: const InputDecoration(
+                                labelText: 'Username',
+                                border: OutlineInputBorder()),
+                            validator: (String? value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Enter an username';
                               }
 
-                              _login(_usernameCtrl.text, _passwordCtrl.text);
-                            }),
-                        TextButton(
-                            child: Text('Create account'),
-                            style: secondaryButtonStyle(),
-                            onPressed: () {
-                              const snackBar = SnackBar(
-                                content: Text('Should create account'),
-                              );
+                              return null;
+                            },
+                          ),
+                          const SizedBox(height: 10),
+                          TextFormField(
+                            controller: _passwordCtrl,
+                            obscureText: true,
+                            decoration: const InputDecoration(
+                                labelText: 'Password',
+                                border: OutlineInputBorder()),
+                            validator: (String? value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Enter a password';
+                              }
+
+                              return null;
+                            },
+                          ),
+                          const SizedBox(height: 20),
+                          TextButton(
+                              child: Text('Login'),
+                              style: primaryButtonStyle(),
+                              onPressed: () {
+                                if (!_formKey.currentState!.validate()) {
+                                  return;
+                                }
+
+                                _login(_usernameCtrl.text, _passwordCtrl.text);
+                              }),
+                          TextButton(
+                              child: Text('Create account'),
+                              style: secondaryButtonStyle(),
+                              onPressed: () {
+                                const snackBar = SnackBar(
+                                  content: Text('Should create account'),
+                                );
 
 // Find the ScaffoldMessenger in the widget tree
 // and use it to show a SnackBar.
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(snackBar);
-                            })
-                      ],
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(snackBar);
+                              })
+                        ],
+                      ),
                     ),
-                  ),
-                )
-              ],
+                  )
+                ],
+              ),
             ),
           ),
         ),
-      ),
-    ) // This trailing comma makes auto-formatting nicer for build methods.
-        );
+      ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
   }
 }
