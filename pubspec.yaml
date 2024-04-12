@@ -39,6 +39,7 @@ dependencies:
   google_fonts: 6.1.0
   json_annotation: ^4.8.1
   http: ^1.1.0
+  relative_time: ^5.0.0
 
 dev_dependencies:
   flutter_test:
@@ -68,6 +69,7 @@ flutter:
   assets:
     - assets/nitroterm_logo.png
     - assets/backgrounds/background.png
+    - assets/samples/profile_picture.jpg
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

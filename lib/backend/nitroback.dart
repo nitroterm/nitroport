@@ -30,3 +30,20 @@ Future<LoginResultDto?> nbLogin(String username, String password) async {
 
   return result;
 }
+
+Future<FeedResultDto?> nbGetFeed() async {
+  final response =
+  await http.get(Uri.parse('$nbBaseUrl/feed'), headers: {
+    HttpHeaders.contentTypeHeader: ContentType.json.value,
+    if (nbToken != null) HttpHeaders.authorizationHeader: 'Bearer $nbToken'
+  });
+
+  if (response.statusCode == HttpStatus.tooManyRequests) {
+    return FeedResultDto(success: false, slug: "too_many_requests", message: "Too many requests");
+  }
+
+  FeedResultDto result = FeedResultDto.fromJson(
+      jsonDecode(response.body) as Map<String, dynamic>);
+
+  return result;
+}
