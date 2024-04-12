@@ -104,6 +104,17 @@ abstract class ResultDto {
 }
 
 @JsonSerializable()
+class PostCreationDto {
+  PostCreationDto({required this.contents});
+
+  String? contents;
+
+  factory PostCreationDto.fromJson(Map<String, dynamic> json) =>
+      _$PostCreationDtoFromJson(json);
+  Map<String, dynamic> toJson() => _$PostCreationDtoToJson(this);
+}
+
+@JsonSerializable()
 class LoginResultDto extends ResultDto {
   LoginResultDto({required super.success, super.slug, super.message});
 
@@ -125,4 +136,16 @@ class FeedResultDto extends ResultDto {
       _$FeedResultDtoFromJson(json);
 
   Map<String, dynamic> toJson() => _$FeedResultDtoToJson(this);
+}
+
+@JsonSerializable()
+class PostResultDto extends ResultDto {
+  PostResultDto({required super.success, super.slug, super.message});
+
+  PostDto? data;
+
+  factory PostResultDto.fromJson(Map<String, dynamic> json) =>
+      _$PostResultDtoFromJson(json);
+
+  Map<String, dynamic> toJson() => _$PostResultDtoToJson(this);
 }

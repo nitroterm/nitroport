@@ -83,6 +83,16 @@ Map<String, dynamic> _$PostDtoToJson(PostDto instance) => <String, dynamic>{
       'editionDate': instance.editionDate?.toIso8601String(),
     };
 
+PostCreationDto _$PostCreationDtoFromJson(Map<String, dynamic> json) =>
+    PostCreationDto(
+      contents: json['contents'] as String?,
+    );
+
+Map<String, dynamic> _$PostCreationDtoToJson(PostCreationDto instance) =>
+    <String, dynamic>{
+      'contents': instance.contents,
+    };
+
 LoginResultDto _$LoginResultDtoFromJson(Map<String, dynamic> json) =>
     LoginResultDto(
       success: json['success'] as bool,
@@ -110,6 +120,23 @@ FeedResultDto _$FeedResultDtoFromJson(Map<String, dynamic> json) =>
         .toList();
 
 Map<String, dynamic> _$FeedResultDtoToJson(FeedResultDto instance) =>
+    <String, dynamic>{
+      'success': instance.success,
+      'slug': instance.slug,
+      'message': instance.message,
+      'data': instance.data,
+    };
+
+PostResultDto _$PostResultDtoFromJson(Map<String, dynamic> json) =>
+    PostResultDto(
+      success: json['success'] as bool,
+      slug: json['slug'] as String?,
+      message: json['message'] as String?,
+    )..data = json['data'] == null
+        ? null
+        : PostDto.fromJson(json['data'] as Map<String, dynamic>);
+
+Map<String, dynamic> _$PostResultDtoToJson(PostResultDto instance) =>
     <String, dynamic>{
       'success': instance.success,
       'slug': instance.slug,

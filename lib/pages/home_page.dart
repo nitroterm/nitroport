@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nitroport/colortheme.dart';
 import 'package:nitroport/pages/home_routes/feed_home_route.dart';
+import 'package:nitroport/pages/new_post_page.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -31,9 +32,13 @@ class _MyHomePageState extends State<MyHomePage> {
         title: const Image(image: AssetImage('assets/nitroterm_logo.png'), height: 40,),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return const NewPostPage();
+          }));
+        },
+        tooltip: 'Write Something',
+        child: const Icon(Icons.edit),
       ),
       bottomNavigationBar: NavigationBar(
         elevation: 0,

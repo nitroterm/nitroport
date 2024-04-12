@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 
 const String nbBaseUrl = "https://services.cacahuete.dev/api/nitroterm/v1";
 String? nbToken;
+UserDto? nbCurrentUser;
 
 Future<LoginResultDto?> nbLogin(String username, String password) async {
   LoginDto dto = LoginDto(username: username, password: password);
@@ -26,7 +27,28 @@ Future<LoginResultDto?> nbLogin(String username, String password) async {
 
   if (result.success) {
     nbToken = result.data!.token;
+    nbCurrentUser = result.data!.user;
   }
+
+  return result;
+}
+
+Future<PostResultDto?> nbPostMessage(String contents) async {
+  PostCreationDto dto = PostCreationDto(contents: contents);
+  var bodyJson = jsonEncode(dto.toJson());
+
+  final response =
+  await http.post(Uri.parse('$nbBaseUrl/post'), body: bodyJson, headers: {
+    HttpHeaders.contentTypeHeader: ContentType.json.value,
+    if (nbToken != null) HttpHeaders.authorizationHeader: 'Bearer $nbToken'
+  });
+
+  if (response.statusCode == HttpStatus.tooManyRequests) {
+    return PostResultDto(success: false, slug: "too_many_requests", message: "Too many requests");
+  }
+
+  PostResultDto result = PostResultDto.fromJson(
+      jsonDecode(response.body) as Map<String, dynamic>);
 
   return result;
 }

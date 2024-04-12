@@ -21,12 +21,13 @@ class NTPostCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 10),
+      margin: const EdgeInsets.only(bottom: 10),
       decoration: BoxDecoration(
           color: const Color(0xFF080016),
           border: Border.all(color: const Color(0xFF411A83), width: 1),
           borderRadius: BorderRadius.circular(15)),
       child: Container(
-        margin: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+        margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
