@@ -29,8 +29,9 @@ class _SplashscreenPageState extends State<SplashscreenPage> {
     FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
   }
 
-  void _handleMessage(RemoteMessage message) {
+  void _handleMessage(RemoteMessage message) async {
     if (message.data['type'] == 'post') {
+      await _showInitialRoute();
       Navigator.push(
           context,
           MaterialPageRoute(
