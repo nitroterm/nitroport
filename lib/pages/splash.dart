@@ -31,13 +31,10 @@ class _SplashscreenPageState extends State<SplashscreenPage> {
 
   void _handleMessage(RemoteMessage message) {
     if (message.data['type'] == 'post') {
-      Future initialRouteFuture = _showInitialRoute();
-      Navigator.pushReplacement(
+      Navigator.push(
           context,
           MaterialPageRoute(
               builder: (context) => PostPage(post: Future(() async {
-                    await initialRouteFuture;
-
                     PostResultDto? post = await nbGetPost(message.data['post']);
                     if (post == null) return null;
 
