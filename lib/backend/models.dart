@@ -151,3 +151,15 @@ class PostResultDto extends ResultDto {
 
   Map<String, dynamic> toJson() => _$PostResultDtoToJson(this);
 }
+
+@JsonSerializable()
+class UserResultDto extends ResultDto {
+  UserResultDto({required super.success, super.slug, super.message});
+
+  UserDto? data;
+
+  factory UserResultDto.fromJson(Map<String, dynamic> json) =>
+      _$UserResultDtoFromJson(json);
+
+  Map<String, dynamic> toJson() => _$UserResultDtoToJson(this);
+}

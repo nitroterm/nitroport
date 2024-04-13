@@ -28,6 +28,10 @@ class _FeedHomeRouteState extends State<FeedHomeRoute> {
       margin: const EdgeInsets.symmetric(horizontal: 20),
       child: FutureBuilder(future: _feedFuture, builder: (context, snapshot) {
         if (snapshot.hasData) {
+          if (!snapshot.data!.success) {
+            return Text('${snapshot.data!.message}');
+          }
+
           return SingleChildScrollView(
             child: Column(
               children: [

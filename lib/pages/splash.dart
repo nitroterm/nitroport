@@ -1,6 +1,7 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:nitroport/pages/home_page.dart';
 import 'package:nitroport/pages/login_page.dart';
 import 'package:nitroport/pages/post_page.dart';
 
@@ -17,7 +18,7 @@ class SplashscreenPage extends StatefulWidget {
 class _SplashscreenPageState extends State<SplashscreenPage> {
   Future<void> setupFirebaseMessage() async {
     RemoteMessage? initialMessage =
-    await FirebaseMessaging.instance.getInitialMessage();
+        await FirebaseMessaging.instance.getInitialMessage();
 
     if (initialMessage != null) {
       _handleMessage(initialMessage);
@@ -30,21 +31,31 @@ class _SplashscreenPageState extends State<SplashscreenPage> {
 
   void _handleMessage(RemoteMessage message) {
     if (message.data['type'] == 'post') {
-      _showInitialRoute();
-      Navigator.pushReplacement(context, MaterialPageRoute(builder:
-          (context) => PostPage(post: Future(() async {
-        PostResultDto? post = await nbGetPost(message.data['post']);
-        if (post == null) return null;
+      Future initialRouteFuture = _showInitialRoute();
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) => PostPage(post: Future(() async {
+                    await initialRouteFuture;
 
-        return post.data;
-      })
-      )));
+                    PostResultDto? post = await nbGetPost(message.data['post']);
+                    if (post == null) return null;
+
+                    return post.data;
+                  }))));
     }
   }
 
-  void _showInitialRoute() {
-    Navigator.pushReplacement(context, MaterialPageRoute(builder:
-        (context) => LoginPage(title: 'title')));
+  Future _showInitialRoute() async {
+    if (await nbTryLoadTokenFromSecureStorage()) {
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (context) => MyHomePage(title: 'title')));
+
+      return;
+    }
+
+    Navigator.pushReplacement(context,
+        MaterialPageRoute(builder: (context) => LoginPage(title: 'title')));
   }
 
   void _launchNormally() async {
@@ -58,7 +69,8 @@ class _SplashscreenPageState extends State<SplashscreenPage> {
     return Container(
       color: const Color(0xFF080016),
       child: const Center(
-        child: Image(image: AssetImage('assets/nitroterm_logo.png'), height: 80),
+        child:
+            Image(image: AssetImage('assets/nitroterm_logo.png'), height: 80),
       ),
     );
   }
