@@ -79,3 +79,22 @@ Future<FeedResultDto?> nbGetFeed() async {
 
   return result;
 }
+
+Future<PostResultDto?> nbGetPost(String id) async {
+  final response = await http.get(Uri.parse('$nbBaseUrl/posts/$id'), headers: {
+    HttpHeaders.contentTypeHeader: ContentType.json.value,
+    if (nbToken != null) HttpHeaders.authorizationHeader: 'Bearer $nbToken'
+  });
+
+  if (response.statusCode == HttpStatus.tooManyRequests) {
+    return PostResultDto(
+        success: false,
+        slug: "too_many_requests",
+        message: "Too many requests");
+  }
+
+  PostResultDto result =
+  PostResultDto.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
+
+  return result;
+}

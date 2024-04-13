@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nitroport/backend/models.dart';
+import 'package:nitroport/backend/nitroback.dart';
 import 'package:nitroport/colortheme.dart';
 import 'package:nitroport/pages/login_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:nitroport/pages/post_page.dart';
+import 'package:nitroport/pages/splash.dart';
 import 'firebase_options.dart';
 
 import 'pages/home_page.dart';
@@ -13,7 +17,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MyApp());
+  runApp(const NitrotermApp());
 }
 
 ThemeData _buildTheme() {
@@ -40,16 +44,21 @@ ThemeData _buildTheme() {
   return theme.copyWith(textTheme: GoogleFonts.ptSansTextTheme(theme.textTheme));
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class NitrotermApp extends StatefulWidget {
+  const NitrotermApp({super.key});
 
+  @override
+  State<StatefulWidget> createState() => _NitrotermAppState();
+}
+
+class _NitrotermAppState extends State<NitrotermApp> {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'nitroterm',
       theme: _buildTheme(),
-      home: const LoginPage(title: 'Nitroterm'),
+      home: const SplashscreenPage(),
     );
   }
 }

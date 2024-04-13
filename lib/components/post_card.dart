@@ -26,7 +26,8 @@ class _NTPostCardState extends State<NTPostCard> {
 
   void _click() {
     Navigator.push(context,
-        MaterialPageRoute(builder: (context) => PostPage(post: post)));
+        MaterialPageRoute(builder: (context) =>
+            PostPage(post: Future(() => post))));
   }
 
   @override
