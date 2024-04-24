@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nitroport/backend/models.dart';
+import 'package:nitroport/backend/nitroback.dart';
 import 'package:nitroport/pages/post_page.dart';
 import 'package:relative_time/relative_time.dart';
 
@@ -25,9 +26,10 @@ class _NTPostCardState extends State<NTPostCard> {
   }
 
   void _click() {
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) =>
-            PostPage(post: Future(() => post))));
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => PostPage(post: Future(() => post))));
   }
 
   @override
@@ -46,10 +48,12 @@ class _NTPostCardState extends State<NTPostCard> {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(child: Column(
+              Expanded(
+                  child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(post.creationDate.relativeTimeLocale(const Locale('en'))),
+                  Text(
+                      post.creationDate.relativeTimeLocale(const Locale('en'))),
                   Row(
                     children: [
                       Container(
@@ -57,26 +61,48 @@ class _NTPostCardState extends State<NTPostCard> {
                         decoration: BoxDecoration(
                             color: const Color(0xFF080016),
                             borderRadius: BorderRadius.circular(100)),
-                        child: Image(image: AssetImage('assets/samples/profile_picture.jpg'), height: 40),
+                        child: Image.network(
+                          getProfilePictureUrl(post.sender),
+                          height: 40,
+                          width: 40,
+                          errorBuilder: (ctx, a, b) {
+                            return Container(
+                              height: 40,
+                              width: 40,
+                              color: const Color(0xFFF9E900),
+                            );
+                          },
+                        ),
                       ),
                       SizedBox(width: 10),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(post.sender.displayName ?? post.sender.username, style: Theme.of(context).textTheme.titleMedium,),
+                          Text(
+                            post.sender.displayName ?? post.sender.username,
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
                           Text('@${post.sender.username}'),
                         ],
                       )
                     ],
                   ),
                   SizedBox(height: 10),
-                  Text(post.message, softWrap: true, style: Theme.of(context).textTheme.bodyLarge),
+                  Text(post.message,
+                      softWrap: true,
+                      style: Theme.of(context).textTheme.bodyLarge),
                 ],
               )),
               Column(
                 children: [
-                  IconButton(onPressed: _nitronize, icon: const Icon(Icons.bolt, color: Color(0xFFF9E900),)),
-                  Text(post.nitroLevel.toString(), style: TextStyle(color: Color(0xFFF9E900)))
+                  IconButton(
+                      onPressed: _nitronize,
+                      icon: const Icon(
+                        Icons.bolt,
+                        color: Color(0xFFF9E900),
+                      )),
+                  Text(post.nitroLevel.toString(),
+                      style: TextStyle(color: Color(0xFFF9E900)))
                 ],
               )
             ],

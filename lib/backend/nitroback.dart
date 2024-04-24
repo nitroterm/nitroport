@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:nitroport/backend/models.dart';
 import 'package:http/http.dart' as http;
 
@@ -9,6 +10,16 @@ import '../utils/storage.dart';
 const String nbBaseUrl = "https://services.cacahuete.dev/api/nitroterm/v1";
 String? nbToken;
 UserDto? nbCurrentUser;
+
+String getProfilePictureUrl(UserDto user) {
+  return '$nbBaseUrl/users/${user.username}/picture';
+}
+
+Image getUserProfilePicture() {
+  return Image.network('$nbBaseUrl/user/picture', headers: {
+    if (nbToken != null) HttpHeaders.authorizationHeader: 'Bearer $nbToken'
+  });
+}
 
 Future<bool> nbTryLoadTokenFromSecureStorage() async {
   if (await storage.containsKey(key: 'token')) {

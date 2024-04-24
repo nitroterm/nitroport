@@ -42,6 +42,7 @@ UserDto _$UserDtoFromJson(Map<String, dynamic> json) => UserDto(
       product: json['product'] == null
           ? null
           : ProductDto.fromJson(json['product'] as Map<String, dynamic>),
+      profilePicture: json['profilePicture'] as String,
     );
 
 Map<String, dynamic> _$UserDtoToJson(UserDto instance) => <String, dynamic>{
@@ -49,6 +50,7 @@ Map<String, dynamic> _$UserDtoToJson(UserDto instance) => <String, dynamic>{
       'displayName': instance.displayName,
       'bio': instance.bio,
       'product': instance.product,
+      'profilePicture': instance.profilePicture,
     };
 
 LoginResponseDto _$LoginResponseDtoFromJson(Map<String, dynamic> json) =>

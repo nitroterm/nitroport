@@ -46,12 +46,14 @@ class UserDto {
       {required this.username,
       required this.displayName,
       required this.bio,
-      required this.product});
+      required this.product,
+      required this.profilePicture});
 
   String username;
   String? displayName;
   String? bio;
   ProductDto? product;
+  String profilePicture;
 
   factory UserDto.fromJson(Map<String, dynamic> json) =>
       _$UserDtoFromJson(json);
