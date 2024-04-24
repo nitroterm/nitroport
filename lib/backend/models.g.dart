@@ -10,12 +10,14 @@ LoginDto _$LoginDtoFromJson(Map<String, dynamic> json) => LoginDto(
       username: json['username'] as String,
       password: json['password'] as String,
       reCaptchaChallenge: json['reCaptchaChallenge'] as String?,
+      firebaseToken: json['firebaseToken'] as String?,
     );
 
 Map<String, dynamic> _$LoginDtoToJson(LoginDto instance) => <String, dynamic>{
       'username': instance.username,
       'password': instance.password,
       'reCaptchaChallenge': instance.reCaptchaChallenge,
+      'firebaseToken': instance.firebaseToken,
     };
 
 ProductDto _$ProductDtoFromJson(Map<String, dynamic> json) => ProductDto(
@@ -40,6 +42,7 @@ UserDto _$UserDtoFromJson(Map<String, dynamic> json) => UserDto(
       product: json['product'] == null
           ? null
           : ProductDto.fromJson(json['product'] as Map<String, dynamic>),
+      profilePicture: json['profilePicture'] as String,
     );
 
 Map<String, dynamic> _$UserDtoToJson(UserDto instance) => <String, dynamic>{
@@ -47,6 +50,7 @@ Map<String, dynamic> _$UserDtoToJson(UserDto instance) => <String, dynamic>{
       'displayName': instance.displayName,
       'bio': instance.bio,
       'product': instance.product,
+      'profilePicture': instance.profilePicture,
     };
 
 LoginResponseDto _$LoginResponseDtoFromJson(Map<String, dynamic> json) =>
@@ -137,6 +141,23 @@ PostResultDto _$PostResultDtoFromJson(Map<String, dynamic> json) =>
         : PostDto.fromJson(json['data'] as Map<String, dynamic>);
 
 Map<String, dynamic> _$PostResultDtoToJson(PostResultDto instance) =>
+    <String, dynamic>{
+      'success': instance.success,
+      'slug': instance.slug,
+      'message': instance.message,
+      'data': instance.data,
+    };
+
+UserResultDto _$UserResultDtoFromJson(Map<String, dynamic> json) =>
+    UserResultDto(
+      success: json['success'] as bool,
+      slug: json['slug'] as String?,
+      message: json['message'] as String?,
+    )..data = json['data'] == null
+        ? null
+        : UserDto.fromJson(json['data'] as Map<String, dynamic>);
+
+Map<String, dynamic> _$UserResultDtoToJson(UserResultDto instance) =>
     <String, dynamic>{
       'success': instance.success,
       'slug': instance.slug,

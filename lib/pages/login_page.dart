@@ -1,9 +1,11 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:nitroport/backend/models.dart';
 import 'package:nitroport/backend/nitroback.dart';
 import 'package:nitroport/colortheme.dart';
 import 'package:nitroport/components/button.dart';
 import 'package:nitroport/pages/home_page.dart';
+import 'package:flutter/services.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key, required this.title});
@@ -36,8 +38,11 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _login(String username, String password) async {
+    String? token = await FirebaseMessaging.instance.getToken();
+    //await Clipboard.setData(ClipboardData(text: token!));
+
     LoginResultDto? resp =
-        await nbLogin(_usernameCtrl.text, _passwordCtrl.text);
+        await nbLogin(_usernameCtrl.text, _passwordCtrl.text, token!);
     if (resp == null) {
       _setError("Backend returned no response");
       return;

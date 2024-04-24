@@ -7,11 +7,13 @@ class LoginDto {
   LoginDto(
       {required this.username,
       required this.password,
-      this.reCaptchaChallenge});
+      this.reCaptchaChallenge,
+      this.firebaseToken});
 
   String username;
   String password;
   String? reCaptchaChallenge;
+  String? firebaseToken;
 
   factory LoginDto.fromJson(Map<String, dynamic> json) =>
       _$LoginDtoFromJson(json);
@@ -44,12 +46,14 @@ class UserDto {
       {required this.username,
       required this.displayName,
       required this.bio,
-      required this.product});
+      required this.product,
+      required this.profilePicture});
 
   String username;
   String? displayName;
   String? bio;
   ProductDto? product;
+  String profilePicture;
 
   factory UserDto.fromJson(Map<String, dynamic> json) =>
       _$UserDtoFromJson(json);
@@ -148,4 +152,16 @@ class PostResultDto extends ResultDto {
       _$PostResultDtoFromJson(json);
 
   Map<String, dynamic> toJson() => _$PostResultDtoToJson(this);
+}
+
+@JsonSerializable()
+class UserResultDto extends ResultDto {
+  UserResultDto({required super.success, super.slug, super.message});
+
+  UserDto? data;
+
+  factory UserResultDto.fromJson(Map<String, dynamic> json) =>
+      _$UserResultDtoFromJson(json);
+
+  Map<String, dynamic> toJson() => _$UserResultDtoToJson(this);
 }

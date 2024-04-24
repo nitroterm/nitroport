@@ -17,7 +17,7 @@ class PostPage extends StatefulWidget {
   // used by the build method of the State. Fields in a Widget subclass are
   // always marked "final".
 
-  final PostDto post;
+  final Future<PostDto?> post;
 
   @override
   State<PostPage> createState() => _PostPageState(post: post);
@@ -26,7 +26,7 @@ class PostPage extends StatefulWidget {
 class _PostPageState extends State<PostPage> {
   _PostPageState({required this.post});
 
-  PostDto post;
+  Future<PostDto?> post;
 
   @override
   Widget build(BuildContext context) {
@@ -35,18 +35,28 @@ class _PostPageState extends State<PostPage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('Post'),
       ),
-      body: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            NTPostCard(post: post),
-            Text('Answers', textAlign: TextAlign.left, style: Theme.of(context).textTheme.bodyLarge),
-            const SizedBox(height: 10),
-            Text('Not implemented yet')
-          ],
-        ),
-      )
+      body: FutureBuilder(future: post, builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          if (snapshot.hasError) return Text('${snapshot.error}');
+
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+
+        return Container(
+          margin: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              NTPostCard(post: snapshot.data!),
+              Text('Answers', textAlign: TextAlign.left, style: Theme.of(context).textTheme.bodyLarge),
+              const SizedBox(height: 10),
+              Text('Not implemented yet')
+            ],
+          ),
+        );
+      })
     );
   }
 }
